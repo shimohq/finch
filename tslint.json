@@ -1,0 +1,21 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-eslint-rules"
+  ],
+  "jsRules": {},
+  "rules": {
+    "semicolon": [true, "never"],
+    "trailing-comma": [true, "never"],
+    "quotemark": [true, "single"],
+    "space-before-function-paren": [true, "always"],
+    "object-curly-spacing": [true, "never"],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "object-literal-key-quotes": [true, "as-needed"],
+    "unified-signatures": false
+  },
+  "rulesDirectory": []
+}
+

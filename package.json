@@ -1,0 +1,31 @@
+{
+  "name": "puppeteer-as-a-service",
+  "version": "0.0.1",
+  "description": "Puppeteer as a Service",
+  "main": "build",
+  "scripts": {
+    "build": "tsc",
+    "test": "exit 0"
+  },
+  "keywords": [
+    "puppeteer"
+  ],
+  "author": "Zihua Li <lizihua@shimo.im>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "generic-pool": "^3.4.2",
+    "http-proxy": "^1.17.0",
+    "puppeteer": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/debug": "0.0.31",
+    "@types/express": "^4.16.0",
+    "@types/generic-pool": "^3.1.6",
+    "@types/http-proxy": "^1.16.2",
+    "@types/puppeteer": "^1.10.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  }
+}
