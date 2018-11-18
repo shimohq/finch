@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "module": "commonjs",
+    "downlevelIteration": true,
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "removeComments": true,
@@ -16,7 +17,7 @@
       "dom",
       "es7"
     ],
-    "target": "es5"
+    "target": "es2017"
   },
   "include": [
     "src/**/*"
