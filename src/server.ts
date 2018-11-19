@@ -5,7 +5,7 @@ import BrowserPool from './BrowserPool'
 import {parse} from 'url'
 import {Socket} from 'net'
 
-const {CONNECTION_TIMEOUT} = process.env
+const {CONNECTION_TIMEOUT, HEALTH_CHECK_ENDPOINT} = process.env
 
 export default class FinchServer {
   private app = express()
@@ -14,9 +14,11 @@ export default class FinchServer {
   private server: Server
 
   constructor () {
-    this.app.get('/', (_, res) => {
-      res.end('Hello Finch!')
-    })
+    if (typeof HEALTH_CHECK_ENDPOINT === 'string') {
+      this.app.get(HEALTH_CHECK_ENDPOINT, (_, res) => {
+        res.end('Hey! I am Finch and I am healthy!')
+      })
+    }
     this.server = createServer(async (req, res) => this.app(req, res))
       .on('upgrade', (req: IncomingMessage, socket: Socket, head: any) => {
         this.upgrade(req, socket, head).catch((err) => {
