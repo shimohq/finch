@@ -90,7 +90,6 @@ RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
 # Run everything after as non-privileged user.
 USER pptruser
 
-ENV PORT=3000
 ENV CONNECTION_TIMEOUT=30000
 
 EXPOSE 3000
