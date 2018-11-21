@@ -1,5 +1,5 @@
 # Finch
-Puppeteer as a Service
+🤖 Puppeteer as a Service
 
 ## Features
 
@@ -21,7 +21,7 @@ docker run -p 9001:9001 finch
 
 A Puppeteer cluster will be listening to the port 9001 for you to use as native Puppeteer:
 
-```
+```javascript
 // Replace puppeteer.launch with puppeteer.connect
 const browser = await puppeteer.connect({
   browserWSEndpoint: 'ws://127.0.0.1:9001/'
