@@ -5,7 +5,7 @@ const debug = Debug('browser-pool:utils')
 
 export async function launchBrowser (retries: number = 1): Promise<Browser> {
   const launchArgs = {
-    args: ['--disable-dev-shm-usage', '--no-sandbox', 'disable-setuid-sandbox']
+    args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox']
   }
 
   try {

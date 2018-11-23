@@ -5,11 +5,11 @@ import BrowserPool from './BrowserPool'
 import {parse} from 'url'
 import {Socket} from 'net'
 
-const {CONNECTION_TIMEOUT, HEALTH_CHECK_ENDPOINT} = process.env
+const {CONNECTION_TIMEOUT, HEALTH_CHECK_ENDPOINT, POOL_SIZE} = process.env
 
 export default class FinchServer {
   private app = express()
-  private browserPool = new BrowserPool({poolSize: 10, timeout: 30 * 1000})
+  private browserPool = new BrowserPool({poolSize: POOL_SIZE || 10, timeout: 30 * 1000})
   private proxy = createProxyServer()
   private server: Server
 
