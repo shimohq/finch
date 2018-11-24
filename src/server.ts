@@ -4,18 +4,17 @@ import {createProxyServer} from 'http-proxy'
 import BrowserPool from './BrowserPool'
 import {parse} from 'url'
 import {Socket} from 'net'
-
-const {CONNECTION_TIMEOUT, HEALTH_CHECK_ENDPOINT, POOL_SIZE} = process.env
+import {poolSize, healthCheckEndpoint, connectionTimeout} from './config'
 
 export default class FinchServer {
   private app = express()
-  private browserPool = new BrowserPool({poolSize: POOL_SIZE || 10, timeout: 30 * 1000})
+  private browserPool = new BrowserPool({poolSize: poolSize, timeout: 30 * 1000})
   private proxy = createProxyServer()
   private server: Server
 
   constructor () {
-    if (typeof HEALTH_CHECK_ENDPOINT === 'string') {
-      this.app.get(HEALTH_CHECK_ENDPOINT, (_, res) => {
+    if (healthCheckEndpoint) {
+      this.app.get(healthCheckEndpoint, (_, res) => {
         res.end('Hey! I am Finch and I am healthy!')
       })
     }
@@ -73,7 +72,7 @@ export default class FinchServer {
       setTimeout(() => {
         socket.end('HTTP/1.1 408 Request Timeout')
         reject(new Error('Job has been timed out'))
-      }, (CONNECTION_TIMEOUT as unknown as number) || 60000)
+      }, connectionTimeout)
     })
 
     return Promise.race([handler, timeout]).then(

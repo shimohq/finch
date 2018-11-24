@@ -22,9 +22,10 @@ export default class BrowserPool {
   private timeout?: number
 
   constructor (options: IBrowserPoolOptions = {}) {
+    const poolSize = options.poolSize || 10
     this.pool = createPool<Browser>(BrowserPool.factory, {
-      max: Math.max(options.poolSize || 10, 10),
-      min: 5,
+      max: Math.max(poolSize, 1),
+      min: Math.min(poolSize, 1),
       acquireTimeoutMillis: this.timeout
     })
 

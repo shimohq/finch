@@ -1,7 +1,8 @@
 import FinchServer from './server'
+import * as config from './config'
 
 const server = new FinchServer()
-const port = typeof process.env.PORT === 'undefined' ? 3000 : Number(process.env.PORT)
-server.listen(port, () => {
-  console.log(`Listening port ${port}`)
+server.listen(config.port, () => {
+  console.log('Started successfully with config:')
+  console.log(config)
 })
