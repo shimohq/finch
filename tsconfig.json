@@ -9,6 +9,7 @@
     "preserveConstEnums": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
+    "resolveJsonModule": true,
     "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
