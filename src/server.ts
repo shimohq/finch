@@ -27,12 +27,19 @@ export default class FinchServer {
           }
         })
       })
+
     this.proxy.on('error', (err, _req: IncomingMessage, res) => {
       if (res.writeHead) {
         res.writeHead(500, { 'Content-Type': 'text/plain' })
       }
 
       res.end(`Issue communicating with Chrome: ${err.message}`)
+    })
+
+    this.proxy.on('close', (_, socket) => {
+      if (socket.writable) {
+        socket.end()
+      }
     })
   }
 
@@ -70,7 +77,9 @@ export default class FinchServer {
 
     const timeout = new Promise((_, reject) => {
       setTimeout(() => {
-        socket.end('HTTP/1.1 408 Request Timeout')
+        if (socket.writable) {
+          socket.end('HTTP/1.1 408 Request Timeout')
+        }
         reject(new Error('Job has been timed out'))
       }, connectionTimeout)
     })
