@@ -4,11 +4,11 @@ import {createProxyServer} from 'http-proxy'
 import BrowserPool from './BrowserPool'
 import {parse} from 'url'
 import {Socket} from 'net'
-import {poolSize, healthCheckEndpoint, connectionTimeout} from './config'
+import {maxPoolSize, minPoolSize, healthCheckEndpoint, connectionTimeout} from './config'
 
 export default class FinchServer {
   private app = express()
-  private browserPool = new BrowserPool({poolSize: poolSize, timeout: 30 * 1000})
+  private browserPool = new BrowserPool({maxPoolSize, minPoolSize, timeout: connectionTimeout / 2})
   private proxy = createProxyServer()
   private server: Server
 

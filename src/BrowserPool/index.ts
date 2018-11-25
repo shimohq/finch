@@ -3,8 +3,9 @@ import {Browser} from 'puppeteer'
 import {launchBrowser} from './utils'
 
 export interface IBrowserPoolOptions {
-  poolSize?: number,
-  timeout?: number
+  maxPoolSize: number,
+  minPoolSize: number,
+  timeout: number
 }
 
 const borrowedResources: Map<Browser, Date> = new Map()
@@ -21,18 +22,23 @@ export default class BrowserPool {
   private pool: Pool<Browser>
   private timeout?: number
 
-  constructor (options: IBrowserPoolOptions = {}) {
-    const poolSize = options.poolSize || 10
+  constructor (options: IBrowserPoolOptions) {
+    const maxPoolSize = options.maxPoolSize
+    const minPoolSize = options.minPoolSize
+    const max = Math.max(maxPoolSize, 1)
+    if (max > 10) {
+      process.setMaxListeners(max);
+    }
+    const min = Math.max(minPoolSize, 1)
+
+    setInterval(this.timeoutCheck.bind(this), options.timeout)
+    this.timeout = options.timeout
+
     this.pool = createPool<Browser>(BrowserPool.factory, {
-      max: Math.max(poolSize, 1),
-      min: Math.min(poolSize, 1),
+      max,
+      min,
       acquireTimeoutMillis: this.timeout
     })
-
-    if (options.timeout) {
-      setInterval(this.timeoutCheck.bind(this), options.timeout)
-      this.timeout = options.timeout
-    }
   }
 
   async acquire (): Promise<Browser> {
