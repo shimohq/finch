@@ -1,6 +1,7 @@
 import * as puppeteer from 'puppeteer'
 import Debug from '../utils/debug'
 import * as packageJson from 'puppeteer/package.json'
+import {headless} from '../config'
 
 const browserFetcher = (puppeteer as any).createBrowserFetcher()
 const revision = packageJson.puppeteer.chromium_revision
@@ -11,6 +12,7 @@ debug('got executablePath: %s', executablePath)
 
 export async function launchBrowser (retries: number = 1): Promise<puppeteer.Browser> {
   const launchArgs = {
+    headless,
     executablePath,
     args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox']
   }
